@@ -1,8 +1,3 @@
-//Se dă un şir de paranteze deschise şi închise de tip (, ), [, ], {, }. Să se
-//verifice dacă şirul este corect. Pentru rezolvare folosiţi o stivă de catactere
-//implementare proprie sau std::stack. Exemplu: şirul [()()] este corect, şirul
-//([]) nu este corect, şirul ()]( nu este corect.
-//
 #include<iostream>
 #include<stack>
 
@@ -16,14 +11,19 @@ int main(){
     
     for (int i = 0; i < n; i++) {
         // {[(
-        if(i + 2 < n && paranteze[i] == '{' && paranteze[i+1] == '[' && paranteze[i+2] == '('){
+        if(i + 2 < n
+                && paranteze[i] == '{'
+                && paranteze[i+1] == '['
+                && paranteze[i+2] == '('){
             stiva.push('{');
             stiva.push('[');
             stiva.push('(');
             i += 2;
         }
         // [(
-        else if(i + 1 < n && paranteze[i] == '[' && paranteze[i+1] == '(') {
+        else if(i + 1 < n
+                && paranteze[i] == '['
+                && paranteze[i+1] == '(') {
             stiva.push('[');
             stiva.push('(');
             i += 1;
@@ -33,8 +33,11 @@ int main(){
             stiva.push('(');
         }
         // )]}
-        else if(i + 2 < n && paranteze[i] == ')' && paranteze[i+1] == ']' && paranteze[i+2] == '}'){
-            if(stiva.size() >= 3){
+        else if(i + 2 < n
+                && paranteze[i] == ')'
+                && paranteze[i+1] == ']'
+                && paranteze[i+2] == '}'){
+            if(stiva.size() >= 3 && stiva.top() == '('){
                 stiva.pop();
                 stiva.pop();
                 stiva.pop();
@@ -47,8 +50,10 @@ int main(){
             }
         }
         // )]
-        else if(i + 1 < n && paranteze[i] == ')' && paranteze[i+1] == ']') {
-            if(stiva.size() >= 2){
+        else if(i + 1 < n
+                && paranteze[i] == ')'
+                && paranteze[i+1] == ']') {
+            if(stiva.size() >= 2 && stiva.top() == '('){
                 stiva.pop();
                 stiva.pop();
                 i += 1;
@@ -61,11 +66,33 @@ int main(){
         }
         // )
         else if(paranteze[i] == ')'){
-            if(!stiva.empty()){
+            if(!stiva.empty() && stiva.top() == '('){
                 stiva.pop();
             }
             else{
                 std::cout << "nu sunt închise ) \n";
+                ok = false;
+                break;
+            }
+        }
+        // ]
+        else if(paranteze[i] == ']'){
+            if(!stiva.empty() && stiva.top() == '['){
+                stiva.pop();
+            }
+            else{
+                std::cout << "nu sunt închise ] \n";
+                ok = false;
+                break;
+            }
+        }
+        // }
+        else if(paranteze[i] == '}'){
+            if(!stiva.empty() && stiva.top() == '{'){
+                stiva.pop();
+            }
+            else{
+                std::cout << "nu sunt închise } \n";
                 ok = false;
                 break;
             }
@@ -78,10 +105,10 @@ int main(){
     }
     
     if(ok && stiva.empty()){
-        std::cout << "e bun sirul";
+        std::cout << "e bun sirul \n";
     }
     else if(ok){
-        std::cout << "paranteze neînchise";
+        std::cout << "paranteze neînchise \n";
     }
     
     return 0;
