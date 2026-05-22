@@ -146,12 +146,11 @@ class Produs:
     
 class Magazin:
     def __init__(self, nume, produse=None):
-        
         if nume == "":
             raise ValueError("Lipsa nume.")
         self.nume = nume
         if produse is None:
-            produse = []
+            self.produse = []
         else:
             for p in produse:
                 if str(type(p)) != "<class '__main__.Produs'>":
@@ -173,6 +172,13 @@ class Magazin:
         for p in self.produse:
             if p.denumire == denumire:
                 p.modifica_pret(pret_nou)
+                
+    def val_tot_stoc(self):
+        tot = 0
+        for p in self.produse:
+            tot += p.stoc * p.pret
+        return tot
+        
     def __str__(self):
         text = f"{self.nume}\n"
         
