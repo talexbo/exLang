@@ -6,18 +6,6 @@ Created on Fri May 22 14:11:40 2026
 @author: alex
 """
 
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Fri May 15 14:17:33 2026
-
-@author: alex
-"""
-
-import math
-import numpy as np
-import matplotlib.pyplot as plt
-
 # clasa catalog
 # materie asoc 
 # grupa
