@@ -134,6 +134,7 @@ c1.adauga_student(s2)
 c1.adauga_student(s3)
 c1.modifica_nota_student("Popescu Maria", 9)
 print(c1) 
+c1.modifica_nota_student("Ionescu Vald", 4)
 c_promovati = c1.studenti_promovati()
 for student in c_promovati:
     print(student)
