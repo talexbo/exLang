@@ -99,6 +99,7 @@ class Catalog :
         for student in self.studenti :
             if not student.este_promovat():
                 rezultat.append(student)
+        return rezultat
     
     def __str__(self):
         
@@ -111,7 +112,78 @@ class Catalog :
                 text += str(student) + "\n"
         
         return text
+
+class Produs:
+    def __init__(self, denumire, pret, stoc):
+        if denumire == "":
+            raise ValueError("Numele nu poate fi vid.")
+        if pret <= 0:
+            raise ValueError("Pretul nu poate fi gratis.")
+        if stoc < 0:
+            raise ValueError("Stocul nu poate fi un nr. negativ.")
+        self.denumire = denumire
+        self.pret = pret
+        self.stoc = stoc
     
+    def este_disponibil(self):
+        if self.stoc > 0:
+            return True
+        else:
+            return False
+    
+    def modifica_pret(self, pret_nou):
+        if pret_nou <= 0:
+            raise ValueError("Pretul nu poate fi mai mic sau egal cu 0.")
+        self.pret = pret_nou
+    
+    def modifica_stoc(self, stoc_nou):
+        if stoc_nou <= 0:
+            raise ValueError("Stocul nu poate fi mai mic decat 0.")
+        self.stoc = stoc_nou
+    
+    def __str__(self):
+        return f"{self.denumire}: stoc = {self.stoc}, pret unitar = {self.pret}"
+    
+class Magazin:
+    def __init__(self, nume, produse=None):
+        
+        if nume == "":
+            raise ValueError("Lipsa nume.")
+        self.nume = nume
+        if produse is None:
+            produse = []
+        else:
+            for p in produse:
+                if str(type(p)) != "<class '__main__.Produs'>":
+                    raise ValueError("Nu toate elementele sunt de tip student")
+            self.produse = produse
+            
+    def adauga_produs(self, p):
+        if str(type(p)) != "<class '__main__.Produs'>":
+            raise ValueError("Element nu de tip produs.")
+        self.produse.append(p)
+    
+    def cauta_produs(self,cautat):
+        for p in self.produse:
+            if p.denumire == cautat:
+                return True
+            else: return False
+    
+    def modifica_pret_produs(self, denumire, pret_nou):
+        for p in self.produse:
+            if p.denumire == denumire:
+                p.modifica_pret(pret_nou)
+    def __str__(self):
+        text = f"{self.nume}\n"
+        
+        if len(self.produse) == 0:
+            text += "Nu exista produse."
+        else:
+            for p in self.produse:
+                text += str(p) + "\n"
+        
+        return text
+
 s1 = Student("Popescu Maria", 8)
 s2 = Student("Ionescu Vald", 10)
 s3 = Student("Anton Ioana", 9)
@@ -124,11 +196,15 @@ print(c1)
 c1.modifica_nota_student("Ionescu Vald", 4)
 c_promovati = c1.studenti_promovati()
 c_nepromovati = c1.studenti_nepromovati()
+print("-----------------------------")
 print(c1)
-print(c_nepromovati)
+print("-----------------------------")
 for student in c_promovati:
     print(student)
-    
+print("-----------------------------")    
+for student in c_nepromovati:
+    print(student)
+print("-----------------------------")
 studenti_initiali = [
     Student("Ana", 9),
     Student("Mihai",4),
@@ -137,5 +213,15 @@ studenti_initiali = [
 
 catalog = Catalog("Programare Python", "1A", studenti_initiali)
 print(catalog)
-nepromovati = Catalog.studenti_nepromovati()
-print(nepromovati)
+nepromovati = catalog.studenti_nepromovati()
+for s in nepromovati:
+    print(s)
+print("-----------------------------")
+print("-----------------------------")
+
+m1 = Magazin("Taraba SA")
+banane = Produs("banane", 6, 10000)
+mango = Produs("mango ", 10, 200)
+m1.adauga_produs(banane)
+m1.adauga_produs(mango)
+print(m1)
