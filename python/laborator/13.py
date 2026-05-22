@@ -5,7 +5,6 @@ Created on Fri May 22 14:11:40 2026
 
 @author: alex
 """
-
 # clasa catalog
 # materie asoc 
 # grupa
@@ -124,5 +123,19 @@ c1.modifica_nota_student("Popescu Maria", 9)
 print(c1) 
 c1.modifica_nota_student("Ionescu Vald", 4)
 c_promovati = c1.studenti_promovati()
+c_nepromovati = c1.studenti_nepromovati()
+print(c1)
+print(c_nepromovati)
 for student in c_promovati:
     print(student)
+    
+studenti_initiali = [
+    Student("Ana", 9),
+    Student("Mihai",4),
+    Student("Ioana",7),
+    Student("Radu",10)]
+
+catalog = Catalog("Programare Python", "1A", studenti_initiali)
+print(catalog)
+nepromovati = Catalog.studenti_nepromovati()
+print(nepromovati)
